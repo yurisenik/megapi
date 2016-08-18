@@ -43,7 +43,8 @@ def create_client_contact_deal(request):
                                                             parent_company=company['data']['contractor']['Id'],
                                                             phones=data['contactPhone'].replace(' ', '').split(',')))
 
-    deal = check_megaplan_response(mega.deals.create(program_id=12, contractor_id=company['data']['contractor']['Id'],
+    deal = check_megaplan_response(mega.deals.create(program_id=settings.MEGAPLAN_DEAL_PROGRAM_ID,
+                                                     contractor_id=company['data']['contractor']['Id'],
                                                      contact_id=person['data']['contractor']['Id'], manager_id=1000009,
                                                      auditor_ids=(1000001, 1000000)))
 
