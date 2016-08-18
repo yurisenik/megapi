@@ -4,15 +4,15 @@ from gigaplan import Megaplan
 import json
 from django.conf import settings
 
+
 def index_view(request):
-    html = '<html><body><h1>Megaplan API Gateway.</h1> Any questions? Please contact suv at infotelekom.ru.</body>'\
-           +'</html>'
+    html = '<html><body><h1>Megaplan API Gateway.</h1> Any questions? Please contact suv at infotelekom.ru.</body>' \
+           + '</html>'
     return HttpResponse(html)
 
 
 @csrf_exempt
 def create_client_contact_deal(request):
-
     def check_megaplan_response(data):
         if data['status']['code'] != 'ok':
             HttpResponseServerError(json.dumps(data))
@@ -31,7 +31,7 @@ def create_client_contact_deal(request):
 
     company = check_megaplan_response(mega.clients.add_company(name=data['orgName'],
                                                                phones=data['phones'].replace(' ', '').split(','),
-                                                               responsible_ids=(1000009, ), website=data['site']))
+                                                               responsible_ids=(1000009,), website=data['site']))
 
     payer = check_megaplan_response(mega.payers.edit(payer_id=company['data']['contractor']['PayerId'],
                                                      contractor_id=company['data']['contractor']['Id'],
@@ -50,4 +50,6 @@ def create_client_contact_deal(request):
     comment = check_megaplan_response(mega.comments.add(subject_type='deal', subject_id=deal['data']['deal']['Id'],
                                                         text=request.body.decode('utf-8')))
 
-    return HttpResponse('https://'+settings.MEGAPLAN_HOSTNAME+'/deals/'+str(deal['data']['deal']['Id'])+'/card/', content_type='text/plain')
+    return HttpResponse(
+        'https://' + settings.MEGAPLAN_HOSTNAME + '/deals/' + str(deal['data']['deal']['Id']) + '/card/',
+        content_type='text/plain')
