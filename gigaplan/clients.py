@@ -6,7 +6,8 @@ class Clients(object):
     def __init__(self, request):
         self.request = request
 
-    def add_human(self, last_name, first_name, middle_name='', email='', parent_company=0, phones=()):
+    def add_human(self, last_name, first_name, middle_name='', email='', parent_company=0, phones=(),
+                  responsible_ids=()):
         """See https://help.megaplan.ru/API_contractor_save"""
 
         uri = '/BumsCrmApiV01/Contractor/save.api'
@@ -18,6 +19,10 @@ class Clients(object):
             data['Model[Email]'] = email
         if parent_company:
             data['Model[ParentCompany]'] = parent_company
+
+        if responsible_ids:
+            data['Model[Responsibles]'] = ','.join([str(responsible_id) for responsible_id in responsible_ids])
+
         if phones:
 
             def norm(tel):
@@ -67,7 +72,7 @@ class Clients(object):
         return self.request(uri, data)
 
     def edit_human(self, client_id,first_name='', last_name='',
-                   middle_name='', email='', parent_company=0, phones=()):
+                   middle_name='', email='', parent_company=0, phones=(), responsible_ids=()):
         """See https://help.megaplan.ru/API_contractor_save"""
 
         uri = '/BumsCrmApiV01/Contractor/save.api'
@@ -87,6 +92,9 @@ class Clients(object):
 
         if parent_company:
             data['Model[ParentCompany]'] = parent_company
+
+        if responsible_ids:
+            data['Model[Responsibles]'] = ','.join([str(responsible_id) for responsible_id in responsible_ids])
 
         if phones:
 

@@ -31,7 +31,8 @@ def create_client_contact_deal(request):
 
     company = check_megaplan_response(mega.clients.add_company(name=data['orgName'],
                                                                phones=data['phones'].replace(' ', '').split(','),
-                                                               responsible_ids=(1000009,), website=data['site']))
+                                                               responsible_ids=(data['manager2'],),
+                                                               website=data['site']))
 
     payer = check_megaplan_response(mega.payers.edit(payer_id=company['data']['contractor']['PayerId'],
                                                      contractor_id=company['data']['contractor']['Id'],
@@ -41,12 +42,14 @@ def create_client_contact_deal(request):
                                                             first_name=data['contactFirstName'],
                                                             middle_name=data['contactMiddleName'], email=data['email'],
                                                             parent_company=company['data']['contractor']['Id'],
+                                                            responsible_ids=(data['manager2'],),
                                                             phones=data['contactPhone'].replace(' ', '').split(',')))
 
     deal = check_megaplan_response(mega.deals.create(program_id=settings.MEGAPLAN_DEAL_PROGRAM_ID,
                                                      contractor_id=company['data']['contractor']['Id'],
-                                                     contact_id=person['data']['contractor']['Id'], manager_id=1000009,
-                                                     auditor_ids=(1000001, 1000000)))
+                                                     contact_id=person['data']['contractor']['Id'],
+                                                     manager_id=data['manager2'],
+                                                     auditor_ids=(data['auditors'].split(','))))
 
     comment = check_megaplan_response(mega.comments.add(subject_type='deal', subject_id=deal['data']['deal']['Id'],
                                                         text=request.body.decode('utf-8')))
