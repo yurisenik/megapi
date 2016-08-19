@@ -27,6 +27,8 @@ def create_client_contact_deal(request):
 
     data = json.loads(request.body.decode('utf-8'))
 
+    print(request.body.decode('utf-8'))
+
     mega = Megaplan(settings.MEGAPLAN_HOSTNAME, settings.MEGAPLAN_USERNAME, settings.MEGAPLAN_PASSWORD)
 
     company = check_megaplan_response(mega.clients.add_company(name=data['orgName'],
