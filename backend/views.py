@@ -49,7 +49,8 @@ def create_client_contact_deal(request):
                                                      contractor_id=company['data']['contractor']['Id'],
                                                      contact_id=person['data']['contractor']['Id'],
                                                      manager_id=data['manager2'],
-                                                     auditor_ids=(data['auditors'].split(','))))
+                                                     auditor_ids=(data['auditors'].split(',')),
+                                                     operator_id=data['manager1']))
 
     comment = check_megaplan_response(mega.comments.add(subject_type='deal', subject_id=deal['data']['deal']['Id'],
                                                         text=request.body.decode('utf-8')))
