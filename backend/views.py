@@ -15,7 +15,7 @@ def index_view(request):
 def create_client_contact_deal(request):
     def check_megaplan_response(data):
         if data['status']['code'] != 'ok':
-            HttpResponseServerError(json.dumps(data))
+            HttpResponseForbidden(json.dumps(data))
         return data
 
     if request.method != 'POST':
