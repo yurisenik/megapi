@@ -39,3 +39,26 @@ class Deals(object):
         data = {'ProgramId': program_id}
 
         return self.request(uri, data)
+
+    def as_list(self, filter_fields='', requested_fields='', extra_fields='', limit=0, offset=0):
+        """See https://help.megaplan.ru/API_deal_list"""
+
+        uri = '/BumsTradeApiV01/Deal/list.api'
+        data = {}
+
+        if filter_fields:
+            data['FilterFields'] = filter_fields
+
+        if requested_fields:
+            data['RequestedFields'] = requested_fields
+
+        if extra_fields:
+            data['ExtraFields'] = extra_fields
+
+        if limit:
+            data['Limit'] = limit
+
+        if offset:
+            data['Offset'] = offset
+
+        return self.request(uri, data)
