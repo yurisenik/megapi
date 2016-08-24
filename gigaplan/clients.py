@@ -14,7 +14,8 @@ class Clients(object):
         data = {'Model[TypePerson]': 'human'}
         data['Model[FirstName]'] = first_name
         data['Model[LastName]'] = last_name
-        data['Model[MiddleName]'] = middle_name
+        if middle_name:
+            data['Model[MiddleName]'] = middle_name
         if email:
             data['Model[Email]'] = email
         if parent_company:

@@ -43,7 +43,7 @@ def create_client_contact_deal(request):
     person = check_megaplan_response(mega.clients.add_human(last_name=data['contactLastName'],
                                                             first_name=data['contactFirstName'],
                                                             middle_name=data['contactMiddleName'],
-                                                            email=data['email'].strip(),
+                                                            email=data['email'],
                                                             parent_company=company['data']['contractor']['Id'],
                                                             responsible_ids=(data['manager2'],),
                                                             phones=data['contactPhone'].replace(' ', '').split(',')))
