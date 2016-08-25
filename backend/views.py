@@ -61,7 +61,7 @@ def create_client_contact_deal(request):
 
     if data['comments']:
         comment = check_megaplan_response(mega.comments.add(subject_type='deal', subject_id=deal['data']['deal']['Id'],
-                                                          text=data['comment']))
+                                                          text=data['comments']))
     return HttpResponse(
         'https://' + settings.MEGAPLAN_HOSTNAME + '/deals/' + str(deal['data']['deal']['Id']) + '/card/',
         content_type='text/plain')
