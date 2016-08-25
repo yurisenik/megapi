@@ -58,7 +58,7 @@ def create_client_contact_deal(request):
     comment = check_megaplan_response(mega.comments.add(subject_type='deal', subject_id=deal['data']['deal']['Id'],
                                                         text=request.body.decode('utf-8')))
 
-    if data(['comment']):
+    if data['comment']:
         comment = check_megaplan_response(mega.comments.add(subject_type='deal', subject_id=deal['data']['deal']['Id'],
                                                           text=data['comment']))
     return HttpResponse(
