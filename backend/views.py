@@ -53,12 +53,13 @@ def create_client_contact_deal(request):
                                                      contact_id=person['data']['contractor']['Id'],
                                                      manager_id=data['manager2'],
                                                      auditor_ids=(data['auditors'].split(',')),
-                                                     operator_id=int(data['manager1'])))
+                                                     operator_id=int(data['manager1']),
+                                                     description=data['lastcomment']))
 
     comment = check_megaplan_response(mega.comments.add(subject_type='deal', subject_id=deal['data']['deal']['Id'],
                                                         text=request.body.decode('utf-8')))
 
-    if data['comment']:
+    if data['comments']:
         comment = check_megaplan_response(mega.comments.add(subject_type='deal', subject_id=deal['data']['deal']['Id'],
                                                           text=data['comment']))
     return HttpResponse(
