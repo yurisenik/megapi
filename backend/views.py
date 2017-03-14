@@ -48,7 +48,17 @@ def create_client_contact_deal(request):
                                                             responsible_ids=(data['manager2'],),
                                                             phones=data['contactPhone'].replace(' ', '').split(',')))
 
-    deal = check_megaplan_response(mega.deals.create(program_id=settings.MEGAPLAN_DEAL_PROGRAM_ID,
+    if data['megaplanDealProgramId']=='14':
+        deal = check_megaplan_response(mega.deals.create(program_id=data['megaplanDealProgramId'],
+                                                     contractor_id=company['data']['contractor']['Id'],
+                                                     contact_id=person['data']['contractor']['Id'],
+                                                     manager_id=data['manager2'],
+                                                     auditor_ids=(data['auditors'].split(',')),
+                                                     operator_id=int(data['manager1']),
+                                                     description=data['lastcomment'],
+                                                     interest=data['interest']))
+    else:
+        deal = check_megaplan_response(mega.deals.create(program_id=data['megaplanDealProgramId'],
                                                      contractor_id=company['data']['contractor']['Id'],
                                                      contact_id=person['data']['contractor']['Id'],
                                                      manager_id=data['manager2'],
