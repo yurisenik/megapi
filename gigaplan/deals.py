@@ -5,12 +5,15 @@ class Deals(object):
     def __init__(self, request):
         self.request = request
 
-    def create(self, program_id=12, contractor_id, status_id='', manager_id=0, contact_id=0, auditor_ids=(),
+    def create(self, program_id, contractor_id, status_id='', manager_id=0, contact_id=0, auditor_ids=(),
                description='', operator_id=0, interest=''):
         """See https://help.megaplan.ru/API_deal_save"""
 
         uri = '/BumsTradeApiV01/Deal/save.api'
         data = {'ProgramId': program_id, 'Model[Contractor]': contractor_id}
+
+        if not program_id:
+            program_id = 12
 
         if status_id:
             data['StatusId'] = status_id
